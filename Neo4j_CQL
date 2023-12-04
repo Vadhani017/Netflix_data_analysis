@@ -1,0 +1,33 @@
+// Create Movie nodes
+CREATE (:Movie {title: 'Inception', release_year: 2010})
+CREATE (:Movie {title: 'The Matrix', release_year: 1999})
+CREATE (:Movie {title: 'The Dark Knight', release_year: 2008})
+
+// Create Actor nodes
+CREATE (:Actor {name: 'Leonardo DiCaprio'})
+CREATE (:Actor {name: 'Keanu Reeves'})
+CREATE (:Actor {name: 'Christian Bale'})
+
+// Create Genre nodes
+CREATE (:Genre {name: 'Sci-Fi'})
+CREATE (:Genre {name: 'Action'})
+
+// Create relationships
+MATCH (m:Movie {title: 'Inception'}), (a:Actor {name: 'Leonardo DiCaprio'})
+MERGE (m)-[:ACTED_IN]->(a);
+
+MATCH (m:Movie {title: 'The Matrix'}), (a:Actor {name: 'Keanu Reeves'})
+MERGE (m)-[:ACTED_IN]->(a);
+
+MATCH (m:Movie {title: 'The Dark Knight'}), (a:Actor {name: 'Christian Bale'})
+MERGE (m)-[:ACTED_IN]->(a);
+
+MATCH (m:Movie {title: 'Inception'}), (g:Genre {name: 'Sci-Fi'})
+MERGE (m)-[:IN_GENRE]->(g);
+
+MATCH (m:Movie {title: 'The Matrix'}), (g:Genre {name: 'Action'})
+MERGE (m)-[:IN_GENRE]->(g);
+
+// Display the graph
+MATCH (n)-[r]-(m)
+RETURN n, r, m;
